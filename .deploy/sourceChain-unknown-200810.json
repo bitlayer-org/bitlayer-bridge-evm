@@ -1,0 +1,33 @@
+{
+  "project": "unknown",
+  "proxies": {
+    "WrappedNativeToken": {
+      "name": "WrappedNativeToken",
+      "address": "0x455FF41d00549c36Db7965B323FA7fEF6C92e43e"
+    },
+    "MintERC20Token": {
+      "name": "MintERC20Token",
+      "address": "0x4971aE975c5d652c1ec8339c89Df60adBFee1374"
+    },
+    "BridgeCommittee": {
+      "name": "BridgeCommittee",
+      "address": "0xaD756883Db7d66Ff8d72BDc3Cf276288b0f8114f"
+    },
+    "BridgeConfig": {
+      "name": "BridgeConfig",
+      "address": "0x86A5F69d7D8dce5ebBd2BBCdC9B824A58C2A5100"
+    },
+    "BridgeLimiter": {
+      "name": "BridgeLimiter",
+      "address": "0x6705CD3a9cAdc369979e3892d759B3f1115FEbA9"
+    },
+    "BridgeVault": {
+      "name": "BridgeVault",
+      "address": "0x51Cb2D5f1845E42Bc0Ee18cdC1B861b676890Ec0"
+    },
+    "Bridge": {
+      "name": "Bridge",
+      "address": "0x6F682E0d741e979C194be464628B7730BD8a067d"
+    }
+  }
+}

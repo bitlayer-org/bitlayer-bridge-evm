@@ -1,0 +1,57 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.20;
+
+/// @title IBridge
+/// @dev Interface for the Bridge contract.
+interface IBridge {
+    /// @notice Emitted when tokens are deposited to be bridged.
+    /// @param sourceChainID The ID of the source chain (this chain).
+    /// @param nonce The nonce of the transaction on source chain.
+    /// @param destinationChainID The ID of the destination chain.
+    /// @param tokenID The code of the token.
+    /// @param dstAdjustedAmount The actual amount of tokens transferred, adjusted for destination decimals. Fees are deducted.
+    /// @param originAmount The amount of tokens to transfer, adjusted for destination decimals. The amount without deduction of fees.
+    /// @param senderAddress The address of the sender.
+    /// @param recipientAddress The recipient's address.
+    event TokensDeposited(
+        uint8 indexed sourceChainID,
+        uint64 indexed nonce,
+        uint8 indexed destinationChainID,
+        uint8 tokenID,
+        uint64 dstAdjustedAmount,
+        uint64 originAmount,
+        address senderAddress,
+        bytes recipientAddress
+    );
+
+    /// @notice Emitted when bridged tokens are transferred to the recipient address.
+    /// @param sourceChainID The ID of the source chain.
+    /// @param nonce The nonce of the transaction on source chain.
+    /// @param destinationChainID The ID of the destination chain (this chain).
+    /// @param tokenID The code of the token.
+    /// @param erc20AdjustedAmount The amount of tokens claimed, adjusted for ERC20 decimals.
+    /// @param senderAddress The address of the sender.
+    /// @param recipientAddress The address of the sender.
+    // event BridgedTokensTransferred(
+    event TokensClaimed(
+        uint8 indexed sourceChainID,
+        uint64 indexed nonce,
+        uint8 indexed destinationChainID,
+        uint8 tokenID,
+        uint256 erc20AdjustedAmount,
+        bytes senderAddress,
+        address recipientAddress
+    );
+    
+    /// @notice The support chain and token changed.
+    /// @param chainID The ID of the chain.
+    /// @param tokenID The ID of the token.
+    /// @param bridgeAmount The cross-out number of bridges.
+    /// @param state token enabled state.
+    event TokenChanged (
+      uint8 indexed chainID,
+      uint8 indexed tokenID,
+      uint256 bridgeAmount,
+      bool state
+    );
+}
