@@ -39,7 +39,7 @@ export async function setupBridgeConfig(
 
         for (const supportedChain of config.supportedChains) {
           for (const supportedToken of supportedChain.supportedTokens) {
-            if (supportedToken.isNative != isNative) continue
+            if (supportedToken.native != isNative) continue
             // check supported chain
             const chainSupported = await contract.supportedChains(
               supportedChain.id
@@ -69,7 +69,7 @@ export async function setupBridgeConfig(
               if (
                 supportedTokenInfo.tokenAddress !=
                   hre.ethers.getAddress(supportedToken.address) ||
-                supportedTokenInfo.aptDecimal != targetChainMintTokenDecimals
+                supportedTokenInfo.decimal != targetChainMintTokenDecimals
               ) {
                 supportedTokenIDs.push(supportedToken.id)
                 supportedTokenAddresses.push(supportedToken.address)

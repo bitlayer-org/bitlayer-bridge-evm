@@ -1,33 +1,25 @@
 {
-  "project": "unknown",
+  "project": "sourceChain",
   "proxies": {
-    "WrappedNativeToken": {
-      "name": "WrappedNativeToken",
-      "address": "0x455FF41d00549c36Db7965B323FA7fEF6C92e43e"
-    },
-    "MintERC20Token": {
-      "name": "MintERC20Token",
-      "address": "0x4971aE975c5d652c1ec8339c89Df60adBFee1374"
-    },
     "BridgeCommittee": {
       "name": "BridgeCommittee",
-      "address": "0xaD756883Db7d66Ff8d72BDc3Cf276288b0f8114f"
+      "address": "0x068C3be5D3A346F2515CeB46855894871d509498"
     },
     "BridgeConfig": {
       "name": "BridgeConfig",
-      "address": "0x86A5F69d7D8dce5ebBd2BBCdC9B824A58C2A5100"
+      "address": "0xE2BB2A0F086f5598F024b993D2b1B88f17b63014"
     },
     "BridgeLimiter": {
       "name": "BridgeLimiter",
-      "address": "0x6705CD3a9cAdc369979e3892d759B3f1115FEbA9"
+      "address": "0x89274eff7Af8490823878c97Beee7E848F80c3D5"
     },
     "BridgeVault": {
       "name": "BridgeVault",
-      "address": "0x51Cb2D5f1845E42Bc0Ee18cdC1B861b676890Ec0"
+      "address": "0x372636335A6aFdBc76bBb411868995B50AAa8fF6"
     },
     "Bridge": {
       "name": "Bridge",
-      "address": "0x6F682E0d741e979C194be464628B7730BD8a067d"
+      "address": "0x65bFB02C725eb2CC806Ac0a0cDb0aE5716E47C69"
     }
   }
 }
