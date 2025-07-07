@@ -149,16 +149,14 @@ contract BridgeLimiter is IBridgeLimiter, CommitteeUpgradeable, OwnableUpgradeab
     }
 
     /// @notice Updates the total limit with the provided message if the provided signatures are valid.
-    /// @param signatures array of signatures to validate the message.
     /// @param message The BridgeUtils containing the update limit payload.
-    function updateLimitWithSignatures(
-        bytes[] memory signatures,
+    function updateLimit(
         BridgeUtils.Message memory message
     )
         external
         nonReentrant
-        verifyMessageAndSignatures(message, signatures, BridgeUtils.UPDATE_BRIDGE_LIMIT)
     {
+        require(msg.sender == committee.config().admin(), "BridgeLimiter: Only admin can perform this action");
         // decode the update limit payload
         (uint8 sourceChainID, uint8 tokenID, uint256 newLimit) =
             BridgeUtils.decodeUpdateLimitPayload(message.payload);

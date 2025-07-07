@@ -39,13 +39,12 @@ abstract contract CommitteeUpgradeable is
 
     /// @notice Enables the upgrade of the inheriting contract by verifying the provided signatures.
     /// @dev The function will revert if the provided signatures or message is invalid.
-    /// @param signatures The array of signatures to be verified.
     /// @param message The BridgeUtils to be verified.
-    function upgradeWithSignatures(bytes[] memory signatures, BridgeUtils.Message memory message)
+    function upgrade(BridgeUtils.Message memory message)
         external
         nonReentrant
-        verifyMessageAndSignatures(message, signatures, BridgeUtils.UPGRADE)
     {
+        require(msg.sender == committee.config().admin(), "CommitteeUpgradeable: Only admin can perform this action");
         // decode the upgrade payload
         (address proxy, address implementation, bytes memory callData) =
             BridgeUtils.decodeUpgradePayload(message.payload);
