@@ -3,23 +3,23 @@
   "proxies": {
     "BridgeCommittee": {
       "name": "BridgeCommittee",
-      "address": "0x068C3be5D3A346F2515CeB46855894871d509498"
+      "address": "0x53967D569B16C82aB73717ab92381888028a19fa"
     },
     "BridgeConfig": {
       "name": "BridgeConfig",
-      "address": "0xE2BB2A0F086f5598F024b993D2b1B88f17b63014"
+      "address": "0x88E83F63295853423b19089b82Beb411Ca7Ed081"
     },
     "BridgeLimiter": {
       "name": "BridgeLimiter",
-      "address": "0x89274eff7Af8490823878c97Beee7E848F80c3D5"
+      "address": "0x7b710caFAfb086003dBCD5Ed6DAb071F402Ee6A9"
     },
     "BridgeVault": {
       "name": "BridgeVault",
-      "address": "0x372636335A6aFdBc76bBb411868995B50AAa8fF6"
+      "address": "0xC9F4d87C11faC4EDb6BBD473c3D9488db2E7e720"
     },
     "Bridge": {
       "name": "Bridge",
-      "address": "0x65bFB02C725eb2CC806Ac0a0cDb0aE5716E47C69"
+      "address": "0xDC5f75b49064F975aC907403ec898a2ed19f2600"
     }
   }
 }

@@ -6,11 +6,11 @@ const configs = [
     name: 'sourceChain',
     WBTC: '0x83f62399f2A417db8ad34A4fC54d58240Fc898e9',
     admin: '0x8e9FC1743b3FD7D79a9448a851Fe6F4d7073c610',
-    submitter: '0x8e9FC1743b3FD7D79a9448a851Fe6F4d7073c610',
+    submitter: '0x9f0311F1e35e312d0F4B79Dcf5C1a936b8AE0771',
     feeRecipient: '0x8e9FC1743b3FD7D79a9448a851Fe6F4d7073c610',
     minStakeRequired: 1,
     committees: [{
-      address: '0x8e9FC1743b3FD7D79a9448a851Fe6F4d7073c610',
+      address: '0x9f0311F1e35e312d0F4B79Dcf5C1a936b8AE0771',
       staked: 7777,
       isBlocklisted: false,
     }],

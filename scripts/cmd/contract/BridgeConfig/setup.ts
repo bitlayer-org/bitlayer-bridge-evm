@@ -27,7 +27,6 @@ export async function setupBridgeConfig(
         contractAddress
       )
       const admin = await hre.ethers.getSigner(config.admin)
-      const submitter = await hre.ethers.getSigner(config.submitter)
 
       let isNative = false
       for (let i = 0; i < 2; i++) {
@@ -113,17 +112,12 @@ export async function setupBridgeConfig(
               ]
             ),
           }
-          const signatures = await committeeSignatures(
-            hre,
-            message,
-            getAvailableCommittes(config.committees)
-          )
 
           await sendTxn(
             contract
-              .connect(submitter)
-              .addTokensWithSignatures(signatures, message),
-            `${contractName}.addTokensWithSignatures(${signatures}, ${message})`
+              .connect(admin)
+              .addTokens(message),
+            `${contractName}.addTokens(${message})`
           )
         }
         isNative = !isNative
