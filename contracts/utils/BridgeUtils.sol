@@ -277,7 +277,7 @@ library BridgeUtils {
         uint8 membersLength = uint8(_payload[1]);
         address[] memory members = new address[](membersLength);
         uint8 offset = 2;
-        require((_payload.length - offset) % 20 == 0, "BridgeUtils: Invalid payload length");
+        require(_payload.length - offset == membersLength * 20, "BridgeUtils: Invalid payload length");
         for (uint8 i; i < membersLength; i++) {
             // Calculate the starting index for each address
             if (i > 0) {
@@ -331,7 +331,7 @@ library BridgeUtils {
         // Extract new limit
         // We use assembly to load the 8 bytes (128 bits) starting from byte 2
         assembly {
-            newLimit := mload(add(add(_payload, 0x20), 2))
+            newLimit := shr(128, mload(add(add(_payload, 0x20), 2)))
         }
     }
 

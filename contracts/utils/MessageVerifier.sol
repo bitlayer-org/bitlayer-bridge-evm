@@ -51,4 +51,6 @@ abstract contract MessageVerifier is Initializable {
         }
         _;
     }
+
+    uint256[48] private __gap;
 }

@@ -13,14 +13,13 @@ import "./MessageVerifier.sol";
 /// @dev The contract is intended to be inherited by contracts that require message verification and
 /// upgradeability.
 abstract contract CommitteeUpgradeable is
+    ReentrancyGuardUpgradeable,
     UUPSUpgradeable,
-    MessageVerifier,
-    ReentrancyGuardUpgradeable
+    MessageVerifier
 {
     /* ========== STATE VARIABLES ========== */
 
     bool private _upgradeAuthorized;
-    uint256[50] __gap;
    
     /* ========== constructor ========== */
     /// @custom:oz-upgrades-unsafe-allow constructor
@@ -31,6 +30,7 @@ abstract contract CommitteeUpgradeable is
 
     function __CommitteeUpgradeable_init(address _committee) internal onlyInitializing {
         __ReentrancyGuard_init();
+        __UUPSUpgradeable_init();
         __MessageVerifier_init(_committee);
         committee = IBridgeCommittee(_committee);
     }
@@ -67,4 +67,6 @@ abstract contract CommitteeUpgradeable is
         require(_upgradeAuthorized, "CommitteeUpgradeable: Unauthorized upgrade");
         _upgradeAuthorized = false;
     }
+
+    uint256[49] __gap;
 }
