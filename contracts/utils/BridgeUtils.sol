@@ -173,7 +173,7 @@ library BridgeUtils {
     ///     TokenTransfer payload is 64 bytes.
     ///     byte 0       : sender address length
     ///     bytes 1-32   : sender address (as we only support Sui now, it has to be 32 bytes long)
-    ///     bytes 33     : target chain id
+    ///     byte 33     : target chain id
     ///     byte 34      : target address length
     ///     bytes 35-54  : target address
     ///     byte 55      : token id
