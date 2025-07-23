@@ -68,5 +68,5 @@ abstract contract CommitteeUpgradeable is
         _upgradeAuthorized = false;
     }
 
-    uint256[49] __gap;
+    uint256[49] private __gap;
 }
