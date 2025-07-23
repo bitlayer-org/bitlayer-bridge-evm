@@ -115,16 +115,14 @@ contract BridgeCommittee is OwnableUpgradeable, CommitteeUpgradeable, IBridgeCom
     }
 
     /// @notice Updates the blocklist status of the provided addresses if provided signatures are valid.
-    /// @param signatures The array of signatures to validate the message.
     /// @param message BridgeUtils containing the update blocklist payload.
-    function updateBlocklistWithSignatures(
-        bytes[] memory signatures,
+    function updateBlocklist(
         BridgeUtils.Message memory message
     )
         external
         nonReentrant
-        verifyMessageAndSignatures(message, signatures, BridgeUtils.BLOCKLIST)
     {
+        require(msg.sender == config.admin(), "BridgeCommittee: Only admin can perform this action");
         // decode the blocklist payload
         (bool isBlocklisted, address[] memory _blocklist) =
             BridgeUtils.decodeBlocklistPayload(message.payload);

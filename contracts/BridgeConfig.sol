@@ -20,6 +20,7 @@ contract BridgeConfig is IBridgeConfig, CommitteeUpgradeable {
     mapping(uint8 tokenID => uint256 minAmount) public tokenMinAmount;
 
     address public admin;
+    address public pendingAdmin;
     address public feeRecipient;
 
     /// @notice Constructor function for the BridgeConfig contract.
@@ -113,16 +114,27 @@ contract BridgeConfig is IBridgeConfig, CommitteeUpgradeable {
 
     /* ========== MUTATIVE FUNCTIONS ========== */
 
+    function setPendingAdmin(address _pendingAdmin) external onlyAdmin {
+        require(_pendingAdmin != address(0), "BridgeConfig: Invalid pending admin address");
+        pendingAdmin = _pendingAdmin;
+        emit PendingAdminUpdated(_pendingAdmin);
+    }
+
+    function acceptAdmin() external {
+        require(msg.sender == pendingAdmin, "BridgeConfig: Only pending admin can accept admin");
+        admin = pendingAdmin;
+        pendingAdmin = address(0);
+        emit AdminUpdated(pendingAdmin);
+    }
+
     /// @notice Updates the token price with the provided message if the provided signatures are valid.
-    /// @param signatures array of signatures to validate the message.
     /// @param message BridgeMessage containing the update token price payload.
-    function updateTokenPriceWithSignatures(
-        bytes[] memory signatures,
+    function updateTokenPrice(
         BridgeUtils.Message memory message
     )
         external
         nonReentrant
-        verifyMessageAndSignatures(message, signatures, BridgeUtils.UPDATE_TOKEN_PRICE)
+        onlyAdmin
     {
         // decode the update token payload
         (uint8 tokenID, uint64 price) = BridgeUtils.decodeUpdateTokenPricePayload(message.payload);
@@ -130,10 +142,10 @@ contract BridgeConfig is IBridgeConfig, CommitteeUpgradeable {
         _updateTokenPrice(tokenID, price);
     }
 
-    function addTokensWithSignatures(bytes[] memory signatures, BridgeUtils.Message memory message)
+    function addTokens(BridgeUtils.Message memory message)
         external
         nonReentrant
-        verifyMessageAndSignatures(message, signatures, BridgeUtils.ADD_EVM_TOKENS)
+        onlyAdmin
     {
         // decode the update token payload
         (

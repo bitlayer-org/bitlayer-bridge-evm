@@ -28,7 +28,7 @@ export async function setupBridgeLimiter(
         contractAddress
       )
 
-      const submitter = await hre.ethers.getSigner(config.submitter)
+      const admin = await hre.ethers.getSigner(config.admin)
       for (const supportedChain of config.supportedChains) {
         for (const supportedToken of supportedChain.supportedTokens) {
           // check bridge chain token limit
@@ -50,24 +50,42 @@ export async function setupBridgeLimiter(
               ),
             }
 
-            const signatures = await committeeSignatures(
-              hre,
-              message,
-              getAvailableCommittes(config.committees)
-            )
-
             sendTxn(
               contract
-                .connect(submitter)
-                .updateLimitWithSignatures(signatures, message),
-              `${contractName}.updateLimitWithSignatures(${signatures}, ${message})`
+                .connect(admin)
+                .updateLimit(message),
+              `${contractName}.updateLimit(${message})`
             )
           }
         }
       }
-
-      // contract
+     // contract
       console.log(`| ${contractName} end ------------------`)
     }
+  }
+
+  const contractNameLimiter = contracts.BridgeLimiter
+
+  const contractAddress = proxies[contractNameLimiter].address
+  if (contractAddress) {
+    console.log(`| ${contractNameLimiter} start ------------------`)
+
+    const Bridge = proxies[contracts.Bridge].address
+    if (Bridge) {
+      const contract = await hre.ethers.getContractAt(
+        'BridgeLimiter',
+        contractAddress
+      )
+      const admin = await hre.ethers.getSigner(config.admin)
+      if ((await contract.owner()) == admin.address) {
+        await sendTxn(
+          contract.connect(admin).transferOwnership(Bridge),
+          `${contractName}.connect(admin).transferOwnership(${Bridge})`
+        )
+      }
+    } else {
+      console.error(`deploy ${contractName}: Please deploy first ${Bridge}`)
+    }
+    console.log(`| ${contractName} end ------------------`)
   }
 }

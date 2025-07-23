@@ -6,12 +6,14 @@ import { Manifest, ManifestData } from '../scripts/shared/manifest'
 import contracts from '../scripts/config/contracts'
 import { deployBridgeConfig } from '../scripts/cmd/contract/BridgeConfig/deploy'
 import { deployBridgeCommittee } from '../scripts/cmd/contract/BridgeCommittee/deploy'
+import { upgradeBridge } from '../scripts/cmd/contract/Bridge/upgrade'
 
 describe('FORK', function () {
   const project = 'sourceChain'
   const chainID = 200810
   const config = getConfig(project, 200810)
   let data: ManifestData
+  this.timeout(120000);
   before(async function () {
     const manifest = await Manifest.forNetwork(project, hre.network.provider)
     data = await manifest.read()
@@ -45,16 +47,27 @@ describe('FORK', function () {
       console.error(`not found project: ${project} config`)
       return
     }
-    const committe = await ethers.getContractAt(
-      'BridgeCommittee',
-      '0x7f3e5d233bca0c070da36ccb34992bda7cf2cda8'
-    )
-    await upgradeBridgeCommittee(
+    await upgradeBridge(
       hre,
       data.proxies,
       config,
-      contracts.BridgeCommittee
+      contracts.Bridge
     )
+
+    const bridgeLimiter = await hre.ethers.getContractAt(contracts.BridgeLimiter, data.proxies[contracts.BridgeLimiter].address)
+    await bridgeLimiter.transferOwnership(data.proxies[contracts.Bridge].address)
+
+    const bridge = await hre.ethers.getContractAt(contracts.Bridge, data.proxies[contracts.Bridge].address)
+    const amount = await bridge.transferBridgedTokensWithSignatures(
+      {
+        messageType: 0,
+        version: 1,
+        nonce: 0n,
+        chainID: 16,
+        payload: '0x209c4d23fa4891160c6a734487d0df87919a7daaa926e65ed577887e0cd55054effa148e9fc1743b3fd7d79a9448a851fe6f4d7073c6105800000000000f3a71'
+      }
+    )
+    console.log(amount)
     // if (!config) {
     //   return
     // }

@@ -173,7 +173,7 @@ library BridgeUtils {
     ///     TokenTransfer payload is 64 bytes.
     ///     byte 0       : sender address length
     ///     bytes 1-32   : sender address (as we only support Sui now, it has to be 32 bytes long)
-    ///     bytes 33     : target chain id
+    ///     byte 33     : target chain id
     ///     byte 34      : target address length
     ///     bytes 35-54  : target address
     ///     byte 55      : token id
@@ -277,7 +277,7 @@ library BridgeUtils {
         uint8 membersLength = uint8(_payload[1]);
         address[] memory members = new address[](membersLength);
         uint8 offset = 2;
-        require((_payload.length - offset) % 20 == 0, "BridgeUtils: Invalid payload length");
+        require(_payload.length - offset == membersLength * 20, "BridgeUtils: Invalid payload length");
         for (uint8 i; i < membersLength; i++) {
             // Calculate the starting index for each address
             if (i > 0) {
@@ -311,10 +311,10 @@ library BridgeUtils {
 
     /// @notice Decodes an update limit payload from bytes to a chain ID, token ID, and a new limit.
     /// @dev The function will revert if the payload length is invalid.
-    ///     Update limit payload is 10 bytes.
+    ///     Update limit payload is 18 bytes.
     ///     byte 0       : chain ID
     ///     byte 1       : token ID
-    ///     bytes 2-9    : new limit
+    ///     bytes 2-17    : new limit
     /// @param _payload The payload to be decoded.
     /// @return senderChainID the sending chain ID to update the limit of.
     /// @return senderTokenID the ID of the token to update the limit for.
@@ -329,9 +329,9 @@ library BridgeUtils {
         senderTokenID = uint8(_payload[1]);
 
         // Extract new limit
-        // We use assembly to load the 8 bytes (128 bits) starting from byte 2
+        // We use assembly to load the 16 bytes (128 bits) starting from byte 2
         assembly {
-            newLimit := mload(add(add(_payload, 0x20), 2))
+            newLimit := shr(128, mload(add(add(_payload, 0x20), 2)))
         }
     }
 
