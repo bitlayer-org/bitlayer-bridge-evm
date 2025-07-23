@@ -311,7 +311,7 @@ library BridgeUtils {
 
     /// @notice Decodes an update limit payload from bytes to a chain ID, token ID, and a new limit.
     /// @dev The function will revert if the payload length is invalid.
-    ///     Update limit payload is 16 bytes.
+    ///     Update limit payload is 18 bytes.
     ///     byte 0       : chain ID
     ///     byte 1       : token ID
     ///     bytes 2-17    : new limit
