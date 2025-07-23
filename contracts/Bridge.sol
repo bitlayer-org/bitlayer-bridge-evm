@@ -136,15 +136,13 @@ contract Bridge is IBridge, CommitteeUpgradeable, PausableUpgradeable {
     /// @notice Executes an emergency operation with the provided signatures and message.
     /// @dev If the given operation is to freeze and the bridge is already frozen, the operation
     /// will revert.
-    /// @param signatures The array of signatures to verify.
     /// @param message The BridgeUtils containing the details of the operation.
-    function executeEmergencyOpWithSignatures(
-        bytes[] memory signatures,
+    function executeEmergencyOp(
         BridgeUtils.Message memory message
     )
         external
         nonReentrant
-        verifyMessageAndSignatures(message, signatures, BridgeUtils.EMERGENCY_OP)
+        onlyAdmin
     {
         // decode the emergency op message
         bool isFreezing = BridgeUtils.decodeEmergencyOpPayload(message.payload);

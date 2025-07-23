@@ -13,14 +13,13 @@ import "./MessageVerifier.sol";
 /// @dev The contract is intended to be inherited by contracts that require message verification and
 /// upgradeability.
 abstract contract CommitteeUpgradeable is
+    ReentrancyGuardUpgradeable,
     UUPSUpgradeable,
-    MessageVerifier,
-    ReentrancyGuardUpgradeable
+    MessageVerifier
 {
     /* ========== STATE VARIABLES ========== */
 
     bool private _upgradeAuthorized;
-    uint256[50] __gap;
    
     /* ========== constructor ========== */
     /// @custom:oz-upgrades-unsafe-allow constructor
@@ -31,6 +30,7 @@ abstract contract CommitteeUpgradeable is
 
     function __CommitteeUpgradeable_init(address _committee) internal onlyInitializing {
         __ReentrancyGuard_init();
+        __UUPSUpgradeable_init();
         __MessageVerifier_init(_committee);
         committee = IBridgeCommittee(_committee);
     }
@@ -39,13 +39,12 @@ abstract contract CommitteeUpgradeable is
 
     /// @notice Enables the upgrade of the inheriting contract by verifying the provided signatures.
     /// @dev The function will revert if the provided signatures or message is invalid.
-    /// @param signatures The array of signatures to be verified.
     /// @param message The BridgeUtils to be verified.
-    function upgradeWithSignatures(bytes[] memory signatures, BridgeUtils.Message memory message)
+    function upgrade(BridgeUtils.Message memory message)
         external
         nonReentrant
-        verifyMessageAndSignatures(message, signatures, BridgeUtils.UPGRADE)
     {
+        require(msg.sender == committee.config().admin(), "CommitteeUpgradeable: Only admin can perform this action");
         // decode the upgrade payload
         (address proxy, address implementation, bytes memory callData) =
             BridgeUtils.decodeUpgradePayload(message.payload);
@@ -68,4 +67,6 @@ abstract contract CommitteeUpgradeable is
         require(_upgradeAuthorized, "CommitteeUpgradeable: Unauthorized upgrade");
         _upgradeAuthorized = false;
     }
+
+    uint256[49] private __gap;
 }

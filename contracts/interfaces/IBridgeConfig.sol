@@ -70,6 +70,16 @@ interface IBridgeConfig {
      /// @notice Returns the minimum amount of the token.
     function tokenMinAmount(uint8 tokenID) external view returns (uint256);
 
+    /// @notice Returns the pending admin of the bridge.
+    function pendingAdmin() external view returns (address);
+
+    /// @notice Sets the pending admin of the bridge.
+    /// @param _pendingAdmin The address of the pending admin.
+    function setPendingAdmin(address _pendingAdmin) external;
+
+    /// @notice Accepts the admin of the bridge.
+    function acceptAdmin() external;
+
     event TokenAdded(uint8 tokenID, address tokenAddress, uint8 decimal, uint64 tokenPrice);
     event TokenPriceUpdated(uint8 tokenID, uint64 tokenPrice);
     event TokenFeeUpdated(uint8 tokenID, uint64 feePercentage);
@@ -77,4 +87,6 @@ interface IBridgeConfig {
     event TokenFeeRecipientUpdated(address feeRecipient);
     event ChainIDUpdated(uint8 chainID);
     event SupportedChainIDUpdated(uint8 chainID, bool isSupported);
+    event PendingAdminUpdated(address pendingAdmin);
+    event AdminUpdated(address admin);
 }

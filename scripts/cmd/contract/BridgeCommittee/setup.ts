@@ -21,7 +21,6 @@ export async function setupBridgeCommittee(
     if (contractAddress && BridgeConfigAddress) {
       console.log(`| ${contractName} setup start ------------------`)
       const admin = await hre.ethers.getSigner(config.admin)
-      const submitter = await hre.ethers.getSigner(config.submitter)
       const contract = await hre.ethers.getContractAt(
         'BridgeCommittee',
         contractAddress
@@ -69,7 +68,6 @@ export async function setupBridgeCommittee(
         }
       }
       const nonce = await contract.nonces(MessageType.BLOCKLIST)
-      const committees = getAvailableCommittes(config.committees)
       for (const [key, value] of Object.entries(blocklist)) {
         const vaultLen = value.length
         if (vaultLen > 0) {
@@ -90,13 +88,12 @@ export async function setupBridgeCommittee(
               [setBlocklisted, vaultLen, ...value]
             ),
           }
-          const signatures = await committeeSignatures(hre, message, committees)
 
           await sendTxn(
             contract
-              .connect(submitter)
-              .updateBlocklistWithSignatures(signatures, message),
-            `${contractName}.connect(submitter).updateBlocklistWithSignatures(${signatures}, ${message})`
+              .connect(admin)
+              .updateBlocklist(message),
+            `${contractName}.connect(submitter).updateBlocklist(${message})`
           )
         }
       }

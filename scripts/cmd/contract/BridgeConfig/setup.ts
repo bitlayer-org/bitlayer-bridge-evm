@@ -27,7 +27,6 @@ export async function setupBridgeConfig(
         contractAddress
       )
       const admin = await hre.ethers.getSigner(config.admin)
-      const submitter = await hre.ethers.getSigner(config.submitter)
 
       let isNative = false
       for (let i = 0; i < 2; i++) {
@@ -39,7 +38,7 @@ export async function setupBridgeConfig(
 
         for (const supportedChain of config.supportedChains) {
           for (const supportedToken of supportedChain.supportedTokens) {
-            if (supportedToken.isNative != isNative) continue
+            if (supportedToken.native != isNative) continue
             // check supported chain
             const chainSupported = await contract.supportedChains(
               supportedChain.id
@@ -69,7 +68,7 @@ export async function setupBridgeConfig(
               if (
                 supportedTokenInfo.tokenAddress !=
                   hre.ethers.getAddress(supportedToken.address) ||
-                supportedTokenInfo.aptDecimal != targetChainMintTokenDecimals
+                supportedTokenInfo.decimal != targetChainMintTokenDecimals
               ) {
                 supportedTokenIDs.push(supportedToken.id)
                 supportedTokenAddresses.push(supportedToken.address)
@@ -113,17 +112,12 @@ export async function setupBridgeConfig(
               ]
             ),
           }
-          const signatures = await committeeSignatures(
-            hre,
-            message,
-            getAvailableCommittes(config.committees)
-          )
 
           await sendTxn(
             contract
-              .connect(submitter)
-              .addTokensWithSignatures(signatures, message),
-            `${contractName}.addTokensWithSignatures(${signatures}, ${message})`
+              .connect(admin)
+              .addTokens(message),
+            `${contractName}.addTokens(${message})`
           )
         }
         isNative = !isNative
