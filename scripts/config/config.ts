@@ -40,7 +40,7 @@ const configs = [
             targetChainMintTokenDecimals: 8,
             feePercentage: 0,
             minAmount: 0.0001 * 10 ** 8, // 0.0001 YBTC.b
-            limit: 50 * 10 ** 8, // 1000 YBTC.b
+            limit: 50 * 10 ** 8, // 50 YBTC.b
             initBridgeAmount: 0,
             state: true,
             native: false,
