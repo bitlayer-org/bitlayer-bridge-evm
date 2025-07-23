@@ -329,7 +329,7 @@ library BridgeUtils {
         senderTokenID = uint8(_payload[1]);
 
         // Extract new limit
-        // We use assembly to load the 8 bytes (128 bits) starting from byte 2
+        // We use assembly to load the 16 bytes (128 bits) starting from byte 2
         assembly {
             newLimit := shr(128, mload(add(add(_payload, 0x20), 2)))
         }
