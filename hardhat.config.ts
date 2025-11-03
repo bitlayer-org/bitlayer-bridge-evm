@@ -31,75 +31,29 @@ const config: HardhatUserConfig = {
         url: 'http://127.0.0.1:8546',
       },
       accounts: [
-        // {
-        //   privateKey: process.env.TEST_SUBMITTER_PRIVATE_KEY1 as string, // deployer
-        //   balance: parseEther('100').toString(),
-        // },
-        // {
-        //   privateKey: process.env.TEST_COMMITTEE_PRIVATE_KEY1 as string, // deployer
-        //   balance: parseEther('100').toString(),
-        // },
-        // {
-        //   privateKey: process.env.TEST_COMMITTEE_PRIVATE_KEY2 as string, // deployer
-        //   balance: parseEther('100').toString(),
-        // },
-        // {
-        //   privateKey: process.env.TEST_COMMITTEE_PRIVATE_KEY3 as string, // deployer
-        //   balance: parseEther('100').toString(),
-        // },
-        // {
-        //   privateKey: process.env.TEST_USER_PRIVATE_KEY1 as string, // deployer
-        //   balance: parseEther('100').toString(),
-        // },
         {
-          privateKey: process.env.TEST_BITNOVA_SUBMITTER_PRIVATE_KEY1 as string, // deployer
+          privateKey: process.env.TEST_PRIVATE_KEY1 as string, // deployer
           balance: parseEther('100').toString(),
         },
-        // {
-        //   privateKey: process.env.TEST_BITNOVA_COMMITTEE_PRIVATE_KEY1 as string, // deployer
-        //   balance: parseEther('100').toString(),
-        // },
-        // {
-        //   privateKey: process.env.TEST_BITNOVA_COMMITTEE_PRIVATE_KEY2 as string, // deployer
-        //   balance: parseEther('100').toString(),
-        // },
-        // {
-        //   privateKey: process.env.TEST_BITNOVA_COMMITTEE_PRIVATE_KEY3 as string, // deployer
-        //   balance: parseEther('100').toString(),
-        // },
-        // {
-        //   privateKey: process.env.TEST_BITNOVA_USER_PRIVATE_KEY1 as string, // deployer
-        //   balance: parseEther('100').toString(),
-        // },
       ],
     },
-    // chapel: {
-    //   url: 'https://rpc.ankr.com/bsc_testnet_chapel',
-    //   accounts: [
-    //     process.env.TEST_SUBMITTER_PRIVATE_KEY1 as string, // deployer
-    //     process.env.TEST_COMMITTEE_PRIVATE_KEY1 as string,
-    //     process.env.TEST_COMMITTEE_PRIVATE_KEY2 as string,
-    //     process.env.TEST_COMMITTEE_PRIVATE_KEY3 as string,
-    //     process.env.TEST_USER_PRIVATE_KEY1 as string,
-    //   ],
-    // },
     bitlayerTest: {
       url: 'https://testnet-rpc.bitlayer.org',
       accounts: [
-        process.env.TEST_BITNOVA_SUBMITTER_PRIVATE_KEY1 as string, // deployer
-      //   process.env.TEST_BITNOVA_COMMITTEE_PRIVATE_KEY1 as string,
-      //   process.env.TEST_BITNOVA_COMMITTEE_PRIVATE_KEY2 as string,
-      //   process.env.TEST_BITNOVA_COMMITTEE_PRIVATE_KEY3 as string,
-      //   process.env.TEST_BITNOVA_USER_PRIVATE_KEY1 as string,
+        process.env.TEST_PRIVATE_KEY1 as string, // deployer
       ],
     },
+    bitlayer: {
+      url: 'https://rpc.bitlayer.org',
+      accounts: [
+        process.env.MAINNET_PRIVATE_KEY as string, // deployer
+      ],
+    }
   },
   etherscan: {
     apiKey: {
-      bitlayerTest: "ITKKXWXCAYY5PNMC82U6GP4DUFY1A8MWCT",
-      bitlayer: "ITKKXWXCAYY5PNMC82U6GP4DUFY1A8MWCT",
-      bsc: "ITKKXWXCAYY5PNMC82U6GP4DUFY1A8MWCT",
-      sepolia: "278RM9YN2CN5NR5Q43JSZJ7TZ8UFYAGA3J",
+      bitlayerTest: "xxxx",
+      bitlayer: "xxxx"
     },
     customChains: [
       {
