@@ -191,3 +191,7 @@ The project is configured for:
 3. **Rate Limits**: Configure appropriate limits based on vault liquidity
 4. **Token State**: Regularly audit enabled/disabled token states per chain
 5. **Fee Recipient**: Verify fee recipient addresses are correct
+
+## 📞 Contact
+
+For questions or suggestions, please contact via GitHub Issues.
