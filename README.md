@@ -192,6 +192,10 @@ The project is configured for:
 4. **Token State**: Regularly audit enabled/disabled token states per chain
 5. **Fee Recipient**: Verify fee recipient addresses are correct
 
+## Audit report
+
+https://github.com/bitlayer-org/smart-contract-audits
+
 ## 📞 Contact
 
 For questions or suggestions, please contact via GitHub Issues.
