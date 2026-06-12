@@ -43,7 +43,7 @@ type BridgeMessage = {
 }
 
 function usage(): never {
-  console.error(`Usage:
+  console.error(`用法:
   BRIDGE_ADDRESS=<bridge> \\
   SOURCE_CHAIN_ID=<uint8> \\
   TRANSFER_NONCE=<uint64> \\
@@ -52,23 +52,23 @@ function usage(): never {
   AMOUNT_HUMAN=<decimal amount> \\
   npx hardhat run scripts/transfer-bridged-with-signatures.ts --network bitlayer
 
-Environment:
-  BRIDGE_SIGNER_PRIVATE_KEY       committee signer key used only to sign the bridge message
-  BRIDGE_SUBMITTER_PRIVATE_KEY    submitter key used for callStatic/estimateGas and optional broadcast
-  BRIDGE_ADDRESS                  bridge contract address
-  SOURCE_CHAIN_ID                 source chain ID in the bridge message
-  TRANSFER_NONCE                  unused token-transfer nonce for the selected source chain
+环境变量:
+  BRIDGE_SIGNER_PRIVATE_KEY       committee signer 私钥，只用于签 bridge message
+  BRIDGE_SUBMITTER_PRIVATE_KEY    submitter 私钥，用于 callStatic/estimateGas 和可选广播
+  BRIDGE_ADDRESS                  Bridge 合约地址
+  SOURCE_CHAIN_ID                 message 里的源链 ID
+  TRANSFER_NONCE                  选定源链下未使用的 token-transfer nonce
   TOKEN_ID                        bridge token ID
-  RECIPIENT_ADDRESS               EVM recipient address
-  AMOUNT_RAW                      uint64 amount in bridge token decimals
-  AMOUNT_HUMAN                    human amount parsed with BridgeConfig.tokenDecimalOf(tokenID)
-  TARGET_CHAIN_ID                 optional; defaults to BridgeConfig.chainID()
-  SOURCE_SENDER                   optional 20-byte address or 32-byte hex; defaults to zero bytes32
-  BROADCAST=true                  optional; sends the transaction after simulation
+  RECIPIENT_ADDRESS               EVM 收款地址
+  AMOUNT_RAW                      uint64 bridge token decimal 口径金额
+  AMOUNT_HUMAN                    按 BridgeConfig.tokenDecimalOf(tokenID) 解析的人类可读金额
+  TARGET_CHAIN_ID                 可选；默认读取 BridgeConfig.chainID()
+  SOURCE_SENDER                   可选 20 字节地址或 32 字节 hex；默认 bytes32(0)
+  BROADCAST=true                  可选；simulation 成功后发送交易
 
-Notes:
-  Hardhat run does not pass arbitrary script args reliably in this project, so env vars are preferred.
-  The script defaults to dry-run. Set BROADCAST=true to send the transaction.`)
+说明:
+  当前 Hardhat 工程不稳定支持透传脚本参数，推荐使用环境变量。
+  脚本默认 dry-run。设置 BROADCAST=true 才会发送交易。`)
   process.exit(1)
 }
 
